@@ -24,6 +24,10 @@ const Home: React.FC = () => {
     navigate(e.key);
   };
 
+  const handleLoginButtonClick = () => {
+    navigate("/login");
+  }
+
   return (
     <Layout className="min-h-screen">
       {/* Header Section */}
@@ -39,17 +43,20 @@ const Home: React.FC = () => {
           onClick={handleMenuClick}
         >
           <Menu.Item key="/home/homeContent">首页</Menu.Item>
-          <Menu.Item key="/home/dashboard">概览</Menu.Item>
+          {/*<Menu.Item key="/home/dashboard">概览</Menu.Item>*/}
           <Menu.Item key="/home/helper">助手</Menu.Item>
         </Menu>
-        <div className="flex items-center gap-4">
-          <Avatar size="large" icon={<UserOutlined />} />
-          <Button type="primary">登录</Button>
+        <div style={{display: "flex", flexDirection: "row", alignItems: "center"}}>
+          <Avatar size="large" icon={<UserOutlined />} style={{marginRight: "5px"}} />
+          {localStorage.getItem("username") !== null ?
+            <div style={{ color: "#fff" }}>{localStorage.getItem("username")}</div> :
+            <Button type="primary" onClick={handleLoginButtonClick}>登录</Button>
+          }
         </div>
       </Header>
 
       {/* Main Content Section */}
-      <Content style={{ padding: '0 48px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+      <Content style={{ padding: '0 48px', flex: 1, display: 'flex', flexDirection: 'column', marginTop: '20px' }}>
         <motion.div initial={{ y: -10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} style={{ flex: 1, display: 'flex' }}>
           <div
             style={{
