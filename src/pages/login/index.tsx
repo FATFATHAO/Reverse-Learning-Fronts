@@ -9,7 +9,7 @@ const Login: React.FC = () => {
   const handleSubmit = async (values: { username: string; password: string }) => {
     setLoading(true);
     try {
-      const response = await axios.post("http://127.0.0.1:8000/login", values);
+      const response = await axios.post("http://127.0.0.1:8500/login", values);
       if (response.data.status === "success") {
         message.success("登录成功");
         localStorage.setItem("username", values.username);
@@ -26,7 +26,7 @@ const Login: React.FC = () => {
   const handleRegister = async (values: { username: string; password: string }) => {
     setLoading(true);
     try {
-      const response = await axios.post("http://127.0.0.1:8000/register", values);
+      const response = await axios.post("http://127.0.0.1:8500/register", values);
       if (response.data.status === "success") {
         message.success("注册成功，请登录");
         setActiveTab("login"); // 切换到登录页
