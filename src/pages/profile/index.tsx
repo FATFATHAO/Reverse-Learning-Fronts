@@ -52,7 +52,7 @@ const Profile = () => {
 
       const filenameMap = {
         1: '聊天记录.txt',
-        2: '错题记录.txt',
+        2: '错题记录.md',
         3: '学习建议.txt',
         4: '学习状态分数记录.xlsx'
       };

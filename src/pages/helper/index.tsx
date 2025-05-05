@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Input, Button, Layout, Avatar, Spin, Menu, Upload, message } from "antd";
-import { UserOutlined, RobotOutlined, CameraOutlined, UploadOutlined } from "@ant-design/icons";
+import { UserOutlined, RobotOutlined, CameraOutlined, UploadOutlined, SmileOutlined } from "@ant-design/icons";
 import { motion } from "framer-motion";
 import axios from "axios";
 import ReactMarkdown from "react-markdown";
@@ -87,6 +87,9 @@ const Helper: React.FC = () => {
           </Menu.Item>
           <Menu.Item key="camera" icon={<CameraOutlined />}>
             拍照解题助手
+          </Menu.Item>
+          <Menu.Item key="advice" icon={<SmileOutlined />}>
+            建议助手
           </Menu.Item>
         </Menu>
       </Sider>
