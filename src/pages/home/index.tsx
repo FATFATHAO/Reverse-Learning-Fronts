@@ -1,7 +1,7 @@
 ﻿import React, { useEffect, useState } from "react";
-import { Layout, Menu, Avatar, Button, theme } from "antd";
+import { Layout, Menu, Avatar, Button, theme, Dropdown, MenuProps, Space } from "antd";
 import { motion } from "framer-motion";
-import { UserOutlined } from "@ant-design/icons";
+import { DownOutlined, UserOutlined } from "@ant-design/icons";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 
 const { Header, Footer, Content } = Layout;
@@ -14,15 +14,48 @@ const Home: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [currentMenu, setCurrentMenu] = useState<string>(location.pathname);
+  const username = localStorage.getItem("username");
+
+  const items: MenuProps['items'] = [
+    {
+      key: 'profile',
+      label: '个人信息',
+    },
+    {
+      type: 'divider',
+    },
+    {
+      key: 'logout',
+      danger: true,
+      label: '退出登录',
+    },
+  ];
 
   useEffect(() => {
     setCurrentMenu(location.pathname);
   }, [location.pathname]);
 
-  const handleMenuClick = (e: { key: string }) => {
-    setCurrentMenu(e.key);
-    navigate(e.key);
+  const handleDropMenuClick: MenuProps['onClick'] = ({ key }) => {
+    if (key === 'profile') {
+      navigate("/home/profile"); // 或 navigate('/profile');
+    } else if (key === 'logout') {
+      localStorage.clear();
+      window.location.reload(); // 简单处理也可以用状态管理代替
+    }
   };
+
+  const handleMenuClick: MenuProps['onClick'] = ({ key }) => {
+    navigate(key);
+  };
+
+  // const handleLogout = () => {
+  //   localStorage.clear();
+  //   window.location.reload(); // 或者你可以用状态去重新渲染组件
+  // };
+
+  // const handleLoginButtonClick = () => {
+  //   navigate("/login");
+  // }
 
   return (
     <Layout className="min-h-screen">
@@ -39,17 +72,30 @@ const Home: React.FC = () => {
           onClick={handleMenuClick}
         >
           <Menu.Item key="/home/homeContent">首页</Menu.Item>
-          <Menu.Item key="/home/dashboard">概览</Menu.Item>
+          {/*<Menu.Item key="/home/dashboard">概览</Menu.Item>*/}
           <Menu.Item key="/home/helper">助手</Menu.Item>
         </Menu>
-        <div className="flex items-center gap-4">
-          <Avatar size="large" icon={<UserOutlined />} />
-          <Button type="primary">登录</Button>
+        <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+          <Avatar size="large" icon={<UserOutlined />} style={{ marginRight: "5px" }} />
+          {username ? (
+            <Dropdown menu={{ items, onClick: handleDropMenuClick }} trigger={['hover']} arrow={{pointAtCenter: true}} placement="bottom">
+              <div style={{ color: '#fff', cursor: 'pointer' }}>
+                <Space>
+                  {username}
+                  <DownOutlined style={{marginLeft: "5px"}} />
+                </Space>
+              </div>
+            </Dropdown>
+          ) : (
+            <Button type="primary" onClick={() => navigate('/login')}>
+              登录
+            </Button>
+          )}
         </div>
       </Header>
 
       {/* Main Content Section */}
-      <Content style={{ padding: '0 48px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+      <Content style={{ padding: '0 48px', flex: 1, display: 'flex', flexDirection: 'column', marginTop: '20px' }}>
         <motion.div initial={{ y: -10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} style={{ flex: 1, display: 'flex' }}>
           <div
             style={{

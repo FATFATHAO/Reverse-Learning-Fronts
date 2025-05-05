@@ -5,6 +5,8 @@ import { useCallback } from "react";
 import DashBoard from "../pages/dashboard";
 import Helper from "../pages/helper";
 import HomeContent from "../pages/home/components/home-content";
+import Login from "../pages/login";
+import Profile from "../pages/profile";
 
 const routeConfig: routerConfigType[] = [
   {
@@ -28,7 +30,15 @@ const routeConfig: routerConfigType[] = [
         path: "helper",
         element: <Helper />,
       },
+      {
+        path: "profile",
+        element: <Profile />
+      },
     ],
+  },
+  {
+    path: "/login",
+    element: <Login />
   },
   {
     path: "/404",
